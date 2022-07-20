@@ -19,7 +19,7 @@ jobs:
           - "2.7"
           - "3.0"
           - "3.1"
-    name: Test - macOS ${{ matrix.os }} - Ruby ${{ matrix.ruby }}
+    name: macOS ${{ matrix.os }} - Ruby ${{ matrix.ruby }}
     runs-on: macos-${{ matrix.os }}
     steps:
       - name: Checkout
