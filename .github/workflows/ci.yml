@@ -12,7 +12,6 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - "10.15"
           - "11"
           - "12"
         ruby:
