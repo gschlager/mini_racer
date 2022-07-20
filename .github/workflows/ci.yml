@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  test-macos:
+  test-darwin:
     strategy:
       fail-fast: false
       matrix:
@@ -49,7 +49,7 @@ jobs:
           - "arm64"
         libc:
           - "gnu"
-          - "musl"
+#          - "musl"
 
     name: linux-${{ matrix.platform }} - ruby-${{ matrix.ruby }} - ${{ matrix.libc }}
     runs-on: ubuntu-20.04
@@ -80,10 +80,13 @@ jobs:
 
       - name: Install Alpine system dependencies
         if: ${{ matrix.libc == 'musl' }}
-        run: docker exec -w "${PWD}" ${{ steps.container.outputs.id }} apk add --no-cache build-base linux-headers bash python3 git curl tar clang binutils-gold
+        run: docker exec -w "${PWD}" ${{ steps.container.outputs.id }} apk add --no-cache build-base bash git
 
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Update Rubygems
+        run: docker exec -w "${PWD}" ${{ steps.container.outputs.id }} gem update --system
 
       - name: Bundle
         run: docker exec -w "${PWD}" ${{ steps.container.outputs.id }} bundle install
